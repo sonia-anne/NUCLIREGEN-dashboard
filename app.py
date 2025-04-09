@@ -1,50 +1,32 @@
-import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
-import numpy as np
+import plotly.express as px
 
-# Title
-st.set_page_config(page_title="NUCLIREGEN Dashboard", layout="wide")
-st.title("📊 Progeria Mortality Analysis – NUCLIREGEN")
+# Simulated dataset
+data = {
+    "Age Group (years)": ["0–2", "3–5", "6–8", "9–11", "12–14", "15–17", "18–20", "21–25", "26–30"],
+    "Mortality Rate (%)": [5, 10, 20, 30, 35, 20, 7, 2, 1]
+}
 
-# Dataset
-age_groups = ["0–4", "5–8", "9–12", "13–16", "17–20", "21–28"]
-mortality_rate = [2, 10, 28, 45, 70, 95]  # Hypothetical data
-survival_rate = [100 - x for x in mortality_rate]
+df = pd.DataFrame(data)
 
-df = pd.DataFrame({
-    "Age Group (Years)": age_groups,
-    "Mortality Rate (%)": mortality_rate,
-    "Survival Rate (%)": survival_rate
-})
-
-# Plotly Graph
-fig = go.Figure()
-
-fig.add_trace(go.Bar(
-    x=df["Age Group (Years)"],
-    y=df["Mortality Rate (%)"],
-    name='Mortality Rate',
-    marker_color='crimson',
-    hovertemplate='%{y}% mortality at age %{x}'
-))
-
-fig.add_trace(go.Bar(
-    x=df["Age Group (Years)"],
-    y=df["Survival Rate (%)"],
-    name='Survival Rate',
-    marker_color='mediumseagreen',
-    hovertemplate='%{y}% survival at age %{x}'
-))
-
-fig.update_layout(
-    barmode='stack',
-    title='Estimated Mortality and Survival in Progeria by Age Group',
-    xaxis_title='Age Group (Years)',
-    yaxis_title='Percentage (%)',
-    plot_bgcolor='white',
-    font=dict(family="Arial", size=14),
-    legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5)
+# Create the bar chart using Plotly Express
+fig = px.bar(
+    df,
+    x="Age Group (years)",
+    y="Mortality Rate (%)",
+    text="Mortality Rate (%)",
+    title="📊 Mortality Rate by Age Group in Progeria Patients",
+    labels={"Mortality Rate (%)": "Mortality Rate (%)", "Age Group (years)": "Age Group"},
 )
 
-st.plotly_chart(fig, use_container_width=True)
+# Styling for clarity and aesthetics
+fig.update_traces(marker_color='crimson', textposition='outside')
+fig.update_layout(
+    xaxis_title="Age Group (years)",
+    yaxis_title="Mortality Rate (%)",
+    font=dict(family="Roboto Mono", size=14),
+    plot_bgcolor='white'
+)
+
+# Show in local or Streamlit app
+fig.show()
