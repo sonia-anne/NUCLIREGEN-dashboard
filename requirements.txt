@@ -1,6 +1,7 @@
-streamlit
-plotly
+streamlit>=1.22
+plotly>=5.15
 pandas
-numpy
-dash
-taichi
+scikit-learn
+requests
+dash-bio
+biopython
