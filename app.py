@@ -1,32 +1,39 @@
 import pandas as pd
 import plotly.express as px
 
-# Simulated dataset
+# Datos simulados (puedes reemplazar con datos reales de PRF o WHO)
 data = {
-    "Age Group (years)": ["0–2", "3–5", "6–8", "9–11", "12–14", "15–17", "18–20", "21–25", "26–30"],
+    "Age Group (years)": ["0-2", "3-5", "6-8", "9-11", "12-14", "15-17", "18-20", "21-25", "26-30"],
     "Mortality Rate (%)": [5, 10, 20, 30, 35, 20, 7, 2, 1]
 }
 
 df = pd.DataFrame(data)
 
-# Create the bar chart using Plotly Express
+# Crear gráfico de barras
 fig = px.bar(
     df,
     x="Age Group (years)",
     y="Mortality Rate (%)",
     text="Mortality Rate (%)",
-    title="📊 Mortality Rate by Age Group in Progeria Patients",
-    labels={"Mortality Rate (%)": "Mortality Rate (%)", "Age Group (years)": "Age Group"},
+    title="MORTALITY RATE BY AGE GROUP IN PROGERIA PATIENTS",
+    labels={"Mortality Rate (%)": "Mortality (%)", "Age Group (years)": "Age Group"},
 )
 
-# Styling for clarity and aesthetics
+# Mejoras visuales para publicación científica
 fig.update_traces(marker_color='crimson', textposition='outside')
 fig.update_layout(
-    xaxis_title="Age Group (years)",
-    yaxis_title="Mortality Rate (%)",
+    uniformtext_minsize=8,
+    uniformtext_mode='hide',
+    plot_bgcolor='white',
+    paper_bgcolor='white',
     font=dict(family="Roboto Mono", size=14),
-    plot_bgcolor='white'
+    title_font=dict(size=20, family="Roboto Mono", color="black"),
+    yaxis=dict(title='Mortality Rate (%)', gridcolor='lightgray'),
+    xaxis=dict(title='Age Group (years)', gridcolor='lightgray')
 )
 
-# Show in local or Streamlit app
+# Mostrar en Streamlit (si deseas integrarlo)
+# import streamlit as st
+# st.plotly_chart(fig)
+
 fig.show()
